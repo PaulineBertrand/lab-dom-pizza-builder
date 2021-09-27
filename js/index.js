@@ -90,21 +90,33 @@ function renderButtons() {
   // We could do a forEach on querySelectorAll(".btn") if the state properties were easier to get!!
   // Or a for .. in
   
-  // The pepperoni
-  const pepperoniButton = document.querySelector(".btn.btn-pepperoni");
-  if (!state.pepperoni) {pepperoniButton.classList.remove("active")} else {pepperoniButton.classList.add("active")}
-  // The mushroom
-  const mushroomButton = document.querySelector(".btn.btn-mushrooms");
-  if (!state.mushrooms) {mushroomButton.classList.remove("active")} else {mushroomButton.classList.add("active")}
-  // The peppers
-  const peppersButton = document.querySelector(".btn.btn-green-peppers");
-  if (!state.greenPeppers) {peppersButton.classList.remove("active")} else {peppersButton.classList.add("active")}
-  // The sauce
-  const sauceButton = document.querySelector(".btn.btn-sauce");
-  if (!state.whiteSauce) {sauceButton.classList.remove("active")} else {sauceButton.classList.add("active")}
-  // The crust
-  const crustButton = document.querySelector(".btn.btn-crust");
-  if (!state.glutenFreeCrust) {crustButton.classList.remove("active")} else {crustButton.classList.add("active")}
+  let listOfIngredients = Object.keys(state);
+
+  for (let i = 0; i < 5; i++) {
+    let currentButton = document.querySelector(`.panel li:nth-child(${i + 1}) button`);
+    let ingredient = listOfIngredients[i];
+    if (!state[ingredient]) {
+      currentButton.classList.remove("active")
+    } else {
+      currentButton.classList.add("active");
+    };
+  }
+
+//   // The pepperoni
+//   const pepperoniButton = document.querySelector(".btn.btn-pepperoni");
+//   if (!state.pepperoni) {pepperoniButton.classList.remove("active")} else {pepperoniButton.classList.add("active")}
+//   // The mushroom
+//   const mushroomButton = document.querySelector(".btn.btn-mushrooms");
+//   if (!state.mushrooms) {mushroomButton.classList.remove("active")} else {mushroomButton.classList.add("active")}
+//   // The peppers
+//   const peppersButton = document.querySelector(".btn.btn-green-peppers");
+//   if (!state.greenPeppers) {peppersButton.classList.remove("active")} else {peppersButton.classList.add("active")}
+//   // The sauce
+//   const sauceButton = document.querySelector(".btn.btn-sauce");
+//   if (!state.whiteSauce) {sauceButton.classList.remove("active")} else {sauceButton.classList.add("active")}
+//   // The crust
+//   const crustButton = document.querySelector(".btn.btn-crust");
+//   if (!state.glutenFreeCrust) {crustButton.classList.remove("active")} else {crustButton.classList.add("active")}
 }
 
 function renderPrice() {
@@ -114,19 +126,25 @@ function renderPrice() {
   // There must be a way to refactor
 
   const priceIngredientList = document.querySelector(".price-ingredient-list");
-  const listOfStateProperties = Object.keys(ingredients);
+  const listOfIngredients = Object.keys(ingredients);
   priceIngredientList.innerHTML = "";
+
   for (let i = 0; i < 5; i++) {
-    let ingredient = listOfStateProperties[i];
-    console.log(document.querySelector(`${ingredient}`))
+
+    let ingredient = listOfIngredients[i];
+
     if (state[ingredient] && !document.querySelector(`${ingredient}`)) {
+
       let priceDisplayed = document.createElement("li");
       priceDisplayed.textContent = `$${ingredients[ingredient].price} ${ingredients[ingredient].name}`;
       priceDisplayed.classList.add(`${ingredient}`);
       priceIngredientList.appendChild(priceDisplayed);
+
     } else {
+
       let priceDisplayed = document.querySelector(`${ingredient}`);
       if (priceDisplayed) {priceDisplayed.remove();}
+
     }
   }
 
